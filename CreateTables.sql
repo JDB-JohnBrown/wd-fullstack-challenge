@@ -75,7 +75,7 @@ CREATE TABLE property (
     appeal_a_status TEXT,
     appeal_a_result TEXT,
     appeal_a_reason TEXT,
-    appeal_a_pin_result TEXT
+    appeal_a_pin_result TEXT,
     appeal_a_propav TEXT,
     appeal_a_currav TEXT,
     appeal_a_resltdate TEXT
