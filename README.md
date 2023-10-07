@@ -94,3 +94,33 @@ I wanted to explain my thought process here as I go, since the point of the exer
                 - Need to tweak some date logic. SQLite doesn't have a datetime datatype, I'm going to use integers and store unix time
                 - I want better password requirments than what they're using
         - Now I know what *user_session* table needs to look like. Use their example, tweaking names and datatypes.
+6. **Let's create a virtual environment for our build, hoping to reduce the amount of setup needed to run my project**
+    - Apparently kind of a pain on Windows
+    - cd backend
+    - pip install virtualenv
+    - python -m virtualenv venv
+    - .\venv\Scripts\activate.bat
+    - where.exe python 
+        - \wd-fullstack-challenge\backend\venv\Scripts\python.exe    #OKAY GOOD!
+    - Let's make sure VSCode is _also_ using our venv for the interpretter. 
+        - Open Command Pallete
+        - Search for Python  Interpretter, set it to venv\Scripts\python.exe
+7. **Borrow the code from that reference little by litte**
+    - I want to make sure I understand every piece going into my codebase
+    - I've also made a few stylistic choices that I want to try to be consistent with
+        - Honestly, this is kindof intentional so I MAKE myself understand everyline
+        - Needing to make sure everything is going to work my my db, and moving a few things around, requires every line to be combed over
+8. **Start on the frontend**
+    - Need node.js, NPM, Vue js client installed
+        - I'm a node guy, so I have the first two
+        - *cd ..*  (I was in the backend folder)
+        - *npm install -g @vue/cli*
+        - *vue create frontend*
+        - Wow, lot's of options, let's follow my tutorial to the best of my ability
+        - Manually select features: Babel, PWA, Router, Vuex, Linter
+        - Version: 3 *tutorial didnt have this question, So I'm guessing they were on v2. Let's do v3 and if we hit bugs, well figure them out!*
+        - History Mode-> Yes, linter/formatter config? -> Basic, -> Lint on Save, -> Dedicated config files, -> No, don't save this as a preset, -> Let's use Yarn as the package manager
+        - cd frontend
+        - yarn serve
+        - goto http://localhost:8080/, wow pretty. We're movin now
+
