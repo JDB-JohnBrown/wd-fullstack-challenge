@@ -1,6 +1,8 @@
 <!-- 
 frontend\src\modules\authentication\Register.vue
-Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
+Heavily borrowed from: https://medium.com/@andrelbaldo/register-login-and-logout-boilerplate-written-in-vue-js-and-python-as-api-5ce57e33774b
+Added custom password and Username validation 
+Got rid of all "email" logic, we're using usernames -->
 <template>
     <v-card>
       <v-card-title primary-title>
@@ -12,7 +14,6 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
             name="username"
             label="Username*"
             id="username"
-            v-model="email"
             prepend-icon="mdi-account-circle"
             required
             :rules="[checkIsRequired(username), validateUsername(username)]"
