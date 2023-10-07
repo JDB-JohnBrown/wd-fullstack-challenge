@@ -1,0 +1,9 @@
+pip install virtualenv
+python -m virtualenv venv
+.\venv\Scripts\activate.bat
+pip install SQLAlchemy
+pip install Flash
+pip install Flask-Login
+pip install Flask-SQLAlchemy
+pip install passlib
+pip install PyJWT
