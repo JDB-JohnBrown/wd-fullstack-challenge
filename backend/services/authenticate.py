@@ -16,7 +16,7 @@ from sqlalchemy import and_, or_, update
 JWT_EXP_DELTA_SECONDS = 20
 SESSION_TIMEOUT_IN_HOURS = 24
 
-class Auth()
+class Auth():
         dbSession = SessionManager().session
         def register(self, username, password) -> DefaultMethodResult:
             """
@@ -31,7 +31,7 @@ class Auth()
             password = sha256_crypt.encrypt(password)
 
             if error is None:
-                newUser = User(username = username, password = password, mobilePhone = mobilePhone)
+                newUser = User(username = username, password = password)
                 self.dbSession.add(newUser)
                 self.dbSession.commit()
                 return DefaultMethodResult(True, 'User Created')
@@ -107,6 +107,7 @@ class Auth()
             if result is None:
                 error = 'Invalid credentials'
             else:
+                # I'm using PassLib.sha256_crypt for all passwords
                 if sha256_crypt.verify(result.password, password) == False:
                     error = 'Invalid credentials'
 
@@ -124,3 +125,62 @@ class Auth()
                 return LoginTokenResult(success, 'login result', jwtDecoded)
             else:
                 return LoginTokenResult(False, error, '')
+            
+        def createUserSessionOnDatabase(self, userId, jwToken):
+            """
+            Adds a new register into UserSession table to keep the user session 
+            active until it expires or revoked via logout
+            """
+            userSession = UserSession(
+                user_id = userId,
+                logged_out = False,
+                login_date = datetime.now().timestamp(),
+                expire_date = (datetime.now() + timedelta(hours=SESSION_TIMEOUT_IN_HOURS)).timestamp(), 
+                jwToken=jwToken
+            )
+            self.dbSession.add(userSession)
+            self.dbSession.commit()
+
+        def load_user(self, user_id):
+            return self.dbSession.query(User).get(int(user_id))
+        
+        def GetUserByEmail(self, email):
+            return self.dbSession.query(User).filter_by(username=email).first()
+        
+        def GetUserByToken(self, jwt):
+            filtered = self.dbSession.query(UserSession).order_by(UserSession.userSessionId).filter(
+            and_(UserSession.jwToken==jwt ,UserSession.expireDate > datetime.now(), UserSession.loggedOut == False)
+            )
+            activeSession = filtered.first()
+
+            if activeSession is not None:
+                return self.dbSession.query(User).get(activeSession.userId)
+            else:
+                return None
+            
+        def SessionLogout(self, jwt, url):
+            """
+            Sets the session as logged out and set the logoutDate.
+            """
+            if jwt is not None:
+                currentUserSession = self.dbSession.query(UserSession).filter_by(jwToken=jwt).first()
+                if currentUserSession is not None:
+                    if currentUserSession.logged_out == False:
+                        currentUserSession.logged_out = True
+                        currentUserSession.logout_date = datetime.now().timestamp()
+                        currentUserSession.url = url
+                        self.dbSession.commit()
+                    return DefaultMethodResult(True, 'Logout completed')
+            
+            return DefaultMethodResult(False, 'Error trying to logout')
+        
+        def GetActiveSession(self, jwt):
+            """
+            Returns an active login session for the given JWToken, if it exists.
+            """
+            if jwt is not None:
+                currentUserSession = self.dbSession.query(UserSession).filter_by(jwToken=jwt).first()
+                if currentUserSession is not None:
+                    if currentUserSession.loggedOut == False:
+                        return currentUserSession
+            return None
