@@ -63,6 +63,8 @@ class Auth():
             elif not password:
                 error = 'Password is required.'
                 
+            if len(username) < 4:
+                error = 'Username length is less than 4.'
 
             if len(password) < 7:
                 error = 'Password length is less than 8.'
@@ -81,6 +83,11 @@ class Auth():
                 if len(error) > 0:
                     error += "<br>"
                 error = 'Your password must have at least 1 uppsercase character'
+
+            if not uCase.intersection(digits):
+                if len(error) > 0:
+                    error += "<br>"
+                error = 'Your password must have at least 1 number'
             
             # Query our database to check if the username is already registred
             result = self.dbSession.query(User).filter_by(username=username).first()
@@ -115,13 +122,13 @@ class Auth():
             if error is None:
                 success = True
                 payload = {
-                    'userId': result.userId,
+                    'userId': result.user_id,
                     'exp': datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS)
                 }
                 jwt_token = jwt.encode(payload, appSecret,algorithm='HS256')
                 #decodedToken = jwt.decode(jwt_token, appSecret, algorithms=['HS256'])
                 jwtDecoded = jwt_token.decode("utf-8")
-                self.createUserSessionOnDatabase(result.userId, jwtDecoded)
+                self.createUserSessionOnDatabase(result.user_id, jwtDecoded)
                 return LoginTokenResult(success, 'login result', jwtDecoded)
             else:
                 return LoginTokenResult(False, error, '')
@@ -143,18 +150,15 @@ class Auth():
 
         def load_user(self, user_id):
             return self.dbSession.query(User).get(int(user_id))
-        
-        def GetUserByEmail(self, email):
-            return self.dbSession.query(User).filter_by(username=email).first()
-        
+               
         def GetUserByToken(self, jwt):
-            filtered = self.dbSession.query(UserSession).order_by(UserSession.userSessionId).filter(
-            and_(UserSession.jwToken==jwt ,UserSession.expireDate > datetime.now(), UserSession.loggedOut == False)
+            filtered = self.dbSession.query(UserSession).order_by(UserSession.user_session_id).filter(
+            and_(UserSession.jwToken==jwt ,UserSession.expire_date > datetime.now().timestamp(), UserSession.logged_out == False)
             )
             activeSession = filtered.first()
 
             if activeSession is not None:
-                return self.dbSession.query(User).get(activeSession.userId)
+                return self.dbSession.query(User).get(activeSession.user_id)
             else:
                 return None
             
