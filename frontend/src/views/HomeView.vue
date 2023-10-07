@@ -1,15 +1,17 @@
+<!-- 
+frontend\src\views\Home.vue
+Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
 <template>
-  <hello-world />
+  <div class="home">
+    <h1>Home</h1>
+  </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
-  export default {
-    name: 'Home',
-
-    components: {
-      HelloWorld,
-    },
+export default {
+  name: 'home',
+  components: {
+   
   }
+}
 </script>

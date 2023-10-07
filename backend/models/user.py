@@ -7,6 +7,6 @@ class User(db.Model, flask_login.mixins.UserMixin):
     # Defining the columns
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), unique=False, nullable=False)
+    passw = db.Column(db.String(120), unique=False, nullable=False)
     def get_id(self):
         return chr(self.user_id)

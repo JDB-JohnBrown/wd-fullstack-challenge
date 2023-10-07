@@ -7,6 +7,8 @@ class LoginTokenResult():
     token = ''
 
     def __init__(self, success, message, token):
+        print(success)
+        print(message)
         self.success = success
         self.message = message
         self.token = token

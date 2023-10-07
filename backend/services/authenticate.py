@@ -25,13 +25,13 @@ class Auth():
             """
 
             # checks that the username/password are valid
-            error = self.validateRefisterData(username, password)
+            error = self.validateRegisterData(username, password)
 
             # lets hash our password using PassLib
             password = sha256_crypt.encrypt(password)
 
             if error is None:
-                newUser = User(username = username, password = password)
+                newUser = User(username = username, passw = password)
                 self.dbSession.add(newUser)
                 self.dbSession.commit()
                 return DefaultMethodResult(True, 'User Created')
@@ -63,8 +63,8 @@ class Auth():
             elif not password:
                 error = 'Password is required.'
                 
-            if len(username) < 4:
-                error = 'Username length is less than 4.'
+            if len(username) <= 4:
+                error = 'Username length is less than 4:' + username
 
             if len(password) < 7:
                 error = 'Password length is less than 8.'
@@ -84,7 +84,7 @@ class Auth():
                     error += "<br>"
                 error = 'Your password must have at least 1 uppsercase character'
 
-            if not uCase.intersection(digits):
+            if not digits.intersection(password):
                 if len(error) > 0:
                     error += "<br>"
                 error = 'Your password must have at least 1 number'
@@ -111,14 +111,17 @@ class Auth():
                 error = 'Password is required.'
             # Query our database to check username exists
             result = self.dbSession.query(User).filter_by(username=username).first()
+            print(result)
             if result is None:
                 error = 'Invalid credentials'
+                print(error)
             else:
                 # I'm using PassLib.sha256_crypt for all passwords
-                if sha256_crypt.verify(result.password, password) == False:
+                if sha256_crypt.verify(password, result.passw) == False:
                     error = 'Invalid credentials'
 
             success = False
+            print(error)
             if error is None:
                 success = True
                 payload = {
@@ -126,10 +129,11 @@ class Auth():
                     'exp': datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS)
                 }
                 jwt_token = jwt.encode(payload, appSecret,algorithm='HS256')
-                #decodedToken = jwt.decode(jwt_token, appSecret, algorithms=['HS256'])
-                jwtDecoded = jwt_token.decode("utf-8")
-                self.createUserSessionOnDatabase(result.user_id, jwtDecoded)
-                return LoginTokenResult(success, 'login result', jwtDecoded)
+                jwtDecoded = jwt.decode(jwt_token, appSecret, algorithms=['HS256'])
+                print(jwtDecoded)
+                #jwtDecoded = jwt_token.decode("utf-8")
+                self.createUserSessionOnDatabase(result.user_id, jwt_token)
+                return LoginTokenResult(success, 'login result', jwt_token)
             else:
                 return LoginTokenResult(False, error, '')
             

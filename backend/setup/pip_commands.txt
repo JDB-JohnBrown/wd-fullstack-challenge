@@ -7,3 +7,5 @@ pip install Flask-Login
 pip install Flask-SQLAlchemy
 pip install passlib
 pip install PyJWT
+pip install Flask==2.3.3   
+pip install Werkzeug==2.3.7

@@ -12,6 +12,7 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
             name="username"
             label="Username*"
             id="username"
+            v-model="username"
             prepend-icon="mdi-account-circle"
             required
             :rules="[checkIsRequired(username), validateUsername(username)]"
@@ -40,7 +41,7 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
         <v-btn
           color="success"
           :disabled="!isLoginFormValid || isProcessing || GetIsSnackbarVisible"
-          @click="login({email:email, password:password})"
+          @click="login({username:username, password:password})"
         >Login</v-btn>
       </v-card-actions>
       <SnackNotification
@@ -91,7 +92,7 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
       ...mapActions(["authenticateUserAndSetToken"]),
       validateUsername(username) {
         return (
-            username.length > 4 ||
+            username.length >= 4 ||
             "Username should be atleast four characters"
         );
       },
@@ -100,6 +101,8 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
         this.authenticateUserAndSetToken(loginData)
         .then(function(controller){
           controller.$router.push('/')
+        }).catch(function () {
+            console.log("Promise Rejected");
         })
       }
     },

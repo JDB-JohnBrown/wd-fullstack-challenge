@@ -10,6 +10,7 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
       vertical
     >
       <span>{{message}}</span>
+      <br>
       <v-btn color="primary" @click.native="setSnackbarVisibility(false)">Close</v-btn>
     </v-snackbar>
   </template>

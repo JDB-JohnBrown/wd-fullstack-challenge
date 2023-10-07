@@ -44,11 +44,10 @@ def home():
 @app.route('/register', methods=(['POST']))
 def register():
     requestPayload = request.get_json()  
-    username = requestPayload['email']
+    username = requestPayload['username']
     password = requestPayload['password']
-    mobilePhone= requestPayload['mobilePhone']
 
-    registerResult = authModule.register(username, password, mobilePhone)
+    registerResult = authModule.register(username, password)
     if registerResult.success == True:
         return jsonClassEncoder.encode(registerResult), 200
     else:
@@ -66,7 +65,7 @@ def token():
         return jsonClassEncoder.encode(loginResult), 200
     else:
         requestPayload = request.get_json()  
-        username = requestPayload['email']
+        username = requestPayload['username']
         password = requestPayload['password']
         loginResult = authModule.getLoginToken(username, password, app.config['SECRET_KEY'])
         if loginResult.success == True:
