@@ -83,7 +83,10 @@
         this.registeredProperties = data;
       }, 
       deletePLink: async function(p_id){
-        console.log(p_id);
+        const data = await apiClient.deleteUserProperty(p_id)
+        console.log(data);
+        readProperties();
+
       }
     },
     mounted() {

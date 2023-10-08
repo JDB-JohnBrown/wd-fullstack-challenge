@@ -126,8 +126,21 @@ def load_user_from_request(request):
 def getUserListings():
     user = load_user_from_request(request)
     listings = propInterface.getListings(user.user_id)
-    print("JOHN!")
-    pprint(listings)
     return listings
+
+@app.route('/deleteUserListing', methods=(['POST']))
+@flask_login.login_required
+def deleteUserListing():
+    user = load_user_from_request(request)
+    requestPayload = request.get_json()  
+    property_id = requestPayload['property_id']
+    print(property_id)
+    print(user.user_id)
+    result = propInterface.deleteListing(user.user_id, property_id)
+    pprint(vars(result))
+    if result.success == True:      
+        return jsonClassEncoder.encode(result), 200
+    else:
+        return jsonClassEncoder.encode(result), 401
 
 app.run()    
