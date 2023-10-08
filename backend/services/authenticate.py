@@ -189,6 +189,6 @@ class Auth():
             if jwt is not None:
                 currentUserSession = self.dbSession.query(UserSession).filter_by(jwToken=jwt).first()
                 if currentUserSession is not None:
-                    if currentUserSession.loggedOut == False:
+                    if currentUserSession.logged_out == False:
                         return currentUserSession
             return None

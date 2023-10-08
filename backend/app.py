@@ -10,10 +10,13 @@ from services.authenticate import Auth
 from models.defaultMethodResult import DefaultMethodResult
 from models.loginTokenResult import LoginTokenResult
 from services.jsonClassEncoder import JsonClassEncoder
+from services.propertyInterface import PropInterface
 
 import flask_login
 from flask_login import user_loaded_from_header
 from services.sessionInterface import SessionInterface
+
+from pprint import pprint
 
 app = flask.Flask(__name__)
 ALOWED_CORS_DOMAIN = 'http://localhost:8080'
@@ -28,6 +31,9 @@ app.session_interface = SessionInterface()
 
 # services/authenticate/Auth
 authModule = Auth()
+
+# serices/propertyInterface/PropInterface
+propInterface = PropInterface()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -115,5 +121,13 @@ def load_user_from_request(request):
     # this will cause the request decorated with @flask_login.login_required been denied
     return None
 
+@app.route('/getUserListings', methods=(['GET']))
+@flask_login.login_required
+def getUserListings():
+    user = load_user_from_request(request)
+    listings = propInterface.getListings(user.user_id)
+    print("JOHN!")
+    pprint(listings)
+    return listings
 
 app.run()    

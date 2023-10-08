@@ -123,4 +123,12 @@ I wanted to explain my thought process here as I go, since the point of the exer
         - cd frontend
         - yarn serve
         - goto http://localhost:8080/, wow pretty. We're movin now
+        - close, commit
+        - vue add vuetify
+            - darn, vuetify doesn't work with v3 of vue 
+            - cd ..; rm ./frontend -r -force
+            - redo installing vue, but swap to v2
+            
+
+
 

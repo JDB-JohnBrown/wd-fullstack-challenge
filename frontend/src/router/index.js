@@ -22,6 +22,11 @@ const routes = [
     name: 'login',
     component: () => import('@/views/LoginView')
   },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('@/components/PropertyList')
+  },
 ]
 
 const router = new VueRouter({
