@@ -22,6 +22,7 @@ Instructions will be based on a Windows machine, but should be largely followabl
 7. Run "start-backend.bat"
 8. Run "start-frontend.bat"
    - If it closes immediately, something may have gone wrong with yarn install. Open the frontend folder, and run "yarn install" in a command line
+9. Open localhost:8080 in the browser
 
 # Bonuses
 1. Optimization: Propose at least one optimization that can help the application perform better under increased data loads.
