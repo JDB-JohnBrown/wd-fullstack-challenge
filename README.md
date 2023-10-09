@@ -20,7 +20,7 @@ Instructions will be based on a Windows machine, but should be largely followabl
 6. Run "install.bat" 
     - or follow the commands inside of it step by step
 7. Run "start-backend.bat"
-8. Run "start-backend.bat"
+8. Run "start-frontend.bat"
    - If it closes immediately, something may have gone wrong with yarn install. Open the frontend folder, and run "yarn install" in a command line
 
 
