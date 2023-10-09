@@ -23,6 +23,18 @@ Instructions will be based on a Windows machine, but should be largely followabl
 8. Run "start-frontend.bat"
    - If it closes immediately, something may have gone wrong with yarn install. Open the frontend folder, and run "yarn install" in a command line
 
+# Bonuses
+1. Optimization: Propose at least one optimization that can help the application perform better under increased data loads.
+   - Currently, the search returns ALL results from the database that match the search. This is incredibly fast right now with an sqlite database and one user. With many users, this would impact performance. I would build pagination on the backend, instead of leaving the frontend to sort it out
+   - The *property* table is read-only. This could be split out to a seperate database, so that the many LARGE reads don't impact the read/writes happening to the user_property_link table.
+2. Additional Feature: Propose a feature you believe would enhance the user's experience while managing their property list.
+   - Right now, "search" doesn't account for commas in the market value, it doesn't give the user the ability to search for a numbered range.
+   - The "+" Buttons in search don't turn grey/green after adding/deleting a property from the list, until after you re-search.
+   - Being able to add notes to your own property list would likely be helpful in this kind of application
+   - Being able to "favorite" properties not yet on *your* list might help in the long run
+     
+
+
 
 **W&D Lead Fullstack Engineering Challenge**
 
