@@ -1,3 +1,27 @@
+# How to get started
+Instructions will be based on a Windows machine, but should be largely followable on other systems.
+1. Ensure Python3 is installed.
+    - Go to https://www.python.org/downloads/
+    - Ensure pip is installed. (Should come with Python3)
+        - Run "pip" and make sure it works.
+        - Otherwise, google installing it
+2. Ensure Node.js Is installed 
+    - go to https://nodejs.org/ and follow the instructions to install it on your platform, please set the node into the path so you can use node from windows command prompt.
+    - Ensure npm is installed
+        - Run "npm" and make sure it works
+        - Otherwise, google installing it
+3. Ensure yarn is installed. 
+    - Try the command "yarn"
+    - If it doesnt work run: "npm install yarn -g"
+4. Install Vue.js client
+    - "npm install -g @vue/cli"
+5. Download code from this package
+    - "git clone https://github.com/JDB-JohnBrown/wd-fullstack-challenge.git"
+6. Run "install.bat" 
+    - or follow the commands inside of it step by step
+7. 
+
+
 **W&D Lead Fullstack Engineering Challenge**
 
 Welcome to our Lead Fullstack Engineering Challenge repository. This document will guide you through the challenge. Please fork this repo before you begin, as we will evaluate the code on your fork.
@@ -128,7 +152,32 @@ I wanted to explain my thought process here as I go, since the point of the exer
             - darn, vuetify doesn't work with v3 of vue 
             - cd ..; rm ./frontend -r -force
             - redo installing vue, but swap to v2
-            
+9. **Get login and registration working**      
+    - FOllowing the tutorial this was a breeze
+    - Added more constraints to password and username creation
+    - Changed out using "emails" for raw usernames
+10. **Now we're logged in, do the resy**
+    - This is where it should get easy. I aleady have some basic API calls for logging in, etc...
+    - Start with viewing properties. I can add some test values straight to the database. 
+    - First lets build the python bit, then the front end bit
+    - Pull user ID from the headers we have from logging in. 
+    - Use Flask to enforce active logins are the only people who can access my new listing api router
+    - Honestly flew through that
+    - Pretty easy to have a dynamic data table in vue.js with vuetify
+11. **Add delete API call**
+    - I don't want to do search yet, so let's work on the easier requirment of being able to delete
+    - Add a delete button to the ui
+    - Add delete js functions
+    - Add python delete user listing router 
+    - Add logic to do the delete on the database
+12. **Search**
+    - Search, hmmm... let;s add some text boxes to the ui
+    - SQL has a "like" function, let's use that for these, nice and easy
+    - Follow the same strategy as above
+    - Google how to paginate v-data-tables
+    - Add the "add" logic to a button per row
+        - why, why, why can't I make these buttons smaller?
+
 
 
 
