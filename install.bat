@@ -1,9 +1,6 @@
-cd frontend
-yarn install
-cd ..\backend
-python -m ensurepip --upgrade
+start .\frontend\install.bat
+cd backend
 pip install virtualenv
 python -m virtualenv .env
-.\.env\Scripts\activate
-pip install -r requirements.txt
+.\.env\Scripts\pip.exe install -r requirements.txt
 
