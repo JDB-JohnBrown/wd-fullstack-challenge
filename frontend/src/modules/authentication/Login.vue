@@ -100,7 +100,7 @@ Author: Author : Andre Baldo (http://github.com/andrebaldo/) -->
         loginData.controllerReference = this;
         this.authenticateUserAndSetToken(loginData)
         .then(function(controller){
-          controller.$router.push('/')
+          controller.$router.push('/dashboard')
         }).catch(function () {
             console.log("Promise Rejected");
         })

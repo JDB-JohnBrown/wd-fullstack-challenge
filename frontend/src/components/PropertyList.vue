@@ -33,8 +33,7 @@
           <v-btn color="primary" v-on:click="updateSearch">
             Search
           </v-btn>
-          <v-data-table
-                v-model:page="searchPage"
+          <v-data-table                
                 :headers="searchHeaders"
                 :items="searchedProperties"
                 :items-per-page="itemsPerPage"
@@ -111,7 +110,6 @@
         },
         registeredProperties: [],
         responseSuccess: false,
-        searchPage: 1,
         itemsPerPage: 5,
         searchHeaders: [
           {
