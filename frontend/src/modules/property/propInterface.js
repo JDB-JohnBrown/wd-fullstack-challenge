@@ -9,6 +9,14 @@ const apiClient = {
     async deleteUserProperty(propertyId){
         const response = await axiosInstance.post("/deleteUserListing", {property_id: propertyId});
         return response.data;
+    },
+    async searchProperties(searchBox){
+        const response = await axiosInstance.post("/searchProperties", searchBox);
+        return response.data;
+    },
+    async addUserProperty(propertyId){
+        const response = await axiosInstance.post("/addUserListing", {property_id: propertyId});
+        return response.data;
     }
 };
 
